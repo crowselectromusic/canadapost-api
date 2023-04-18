@@ -185,6 +185,63 @@ describe('Canada Post', function () {
       });
   });
 
+  it('Can create a contract shipment', () => {
+    const shipment = {
+      requestedShippingPoint: 'V5C2H2',
+      transmitShipment: true, // per forum info this is required if you're creating a "contract" shipment without an actual contract
+      deliverySpec: {
+        serviceCode: 'DOM.EP',
+        sender: {
+          company: 'Test Sender',
+          contactPhone: '555-555-1234',
+          addressDetails: {
+            addressLine1: '4809 Albert St.',
+            city: 'Burnaby',
+            provState: 'BC',
+            postalZipCode: 'V5C2H2',
+            countryCode: 'CA'
+          }
+        },
+        settlementInfo: {
+          intendedMethodOfPayment: "CreditCard"
+        },
+        destination: {
+          name: 'Test Recipient',
+          addressDetails: {
+            addressLine1: '9112 Emerald Dr.',
+            city: 'Whistler',
+            provState: 'BC',
+            postalZipCode: 'V0N1B9',
+            countryCode: 'CA'
+          }
+        },
+        parcelCharacteristics: {
+          weight: 1,
+          dimensions: {
+            length: 23,
+            width: 18,
+            height: 10
+          }
+        },
+        preferences: {
+          showPackingInstructions: true,
+          showPostageRate: false,
+          showInsuredValue: false
+        },
+        references: {
+          customerRef1: 'test'
+        }
+      }
+    };
+
+    return cpc.createContractShipment(shipment)
+      .then(result => {
+        chaiExpect(result).to.be.an('object');
+        chaiExpect(result).to.contain.keys('links', 'shipmentId', 'trackingPin');
+        chaiExpect(result.links).to.contain.keys('label', 'self', 'details');
+      });
+  });
+
   it('Can get a tracking summary', () => {
     return cpc.getTrackingSummary('1681334332936901')
       .then(result => {
