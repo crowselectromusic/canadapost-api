@@ -1,7 +1,7 @@
 {
-  "name": "canadapost-api",
-  "version": "1.2.0",
-  "description": "A more complete Canada Post API library",
+  "name": "canadapost-api-alt",
+  "version": "1.3.0",
+  "description": "A Canada Post API library, forked & updated from t3rminus/canada-post",
   "main": "lib/canadapost.js",
   "scripts": {
     "lint": "semistandard",
@@ -15,7 +15,7 @@
     "canadapost"
   ],
   "author": "\"Kevin S\" <kevin@chilicode.ca>",
-  "repository": "https://github.com/t3rminus/canada-post.git",
+  "repository": "https://github.com/crowselectromusic/canadapost-api.git",
   "license": "MIT",
   "dependencies": {
     "lodash.camelcase": "^4.3.0",
