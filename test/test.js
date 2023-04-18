@@ -122,7 +122,8 @@ describe('Canada Post', function () {
           chaiExpect(err).to.exist; // eslint-disable-line no-unused-expressions
           chaiExpect(err).to.be.an.instanceof(CanadaPostClient.CanadaPostError);
           chaiExpect(err.message).to.be.a.string; // eslint-disable-line no-unused-expressions
-          chaiExpect(err.message).to.include('postal-code value \'POOT\' is not a valid instance of type');
+          chaiExpect(err.message).to.include('postal-code is not a valid instance of type')
+          chaiExpect(err.message).to.include('Value is \'POOT\'');
           chaiExpect(err.message).to.include('PostalCodeType');
           chaiExpect(err.code).to.equal('Server');
           chaiExpect(err.originalMessages).to.be.an('array');
