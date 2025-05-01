@@ -4,12 +4,10 @@
 
 Fairly straightforward wrapper for the Canada Post API. Handles basic rating, creating non-contract shipments, and tracking.
 
-[![NPM](https://nodei.co/npm/canadapost-api.png)](https://nodei.co/npm/canadapost-api/)
-
-# Documentation
+## Documentation
 
 [API Documentation](https://github.com/t3rminus/canada-post/blob/master/API.md) is available [here](https://github.com/t3rminus/canada-post/blob/master/API.md).
 
-# Changes
+## Changes
 ### v2.0 - 2025-04-30
 - Node v18.0 is now the minimum required version

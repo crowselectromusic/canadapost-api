@@ -8,6 +8,7 @@ const cpc = new CanadaPostClient(process.env.CPC_USERNAME, process.env.CPC_PASSW
 describe('Canada Post', function () {
   this.timeout(20000);
 
+  let testShipment;
   it('Discovers Domestic Services', () => {
     return cpc.discoverServices('V6G 3E2', 'CA', 'M5V 3L9')
       .then(result => {
@@ -178,6 +179,7 @@ describe('Canada Post', function () {
         chaiExpect(result).to.be.an('object');
         chaiExpect(result).to.contain.keys('links', 'shipmentId', 'trackingPin');
         chaiExpect(result.links).to.contain.keys('label', 'self', 'details');
+        testShipment = result;
       });
   });
 
@@ -221,49 +223,27 @@ describe('Canada Post', function () {
   });
 
   it('Can get shipment links', () => {
-    const timestamp = Date.now();
-    return cpc.getShipments(timestamp - 115200000)
-      .then(result => {
-        chaiExpect(result).to.be.an('array');
-        chaiExpect(result).to.not.be.empty; // eslint-disable-line no-unused-expressions
-
-        return cpc.getShipment(result[0].shipmentId)
-          .then((result) => {
-            chaiExpect(result).to.be.an('object');
-            chaiExpect(result).to.contain.keys('links', 'shipmentId', 'trackingPin');
-            chaiExpect(result.links).to.contain.keys('label', 'self', 'details');
-          });
-      });
+    return cpc.getShipment(testShipment.shipmentId).then((result) => {
+      chaiExpect(result).to.be.an('object');
+      chaiExpect(result).to.contain.keys('links', 'shipmentId', 'trackingPin');
+      chaiExpect(result.links).to.contain.keys('label', 'self', 'details');
+    });
   });
 
   it('Can get shipment details', () => {
-    const timestamp = Date.now();
-    return cpc.getShipments(timestamp - 115200000)
-      .then(result => {
-        chaiExpect(result).to.be.an('array');
-        chaiExpect(result).to.not.be.empty; // eslint-disable-line no-unused-expressions
-
-        return cpc.getShipmentDetails(result[0].shipmentId)
-          .then((result) => {
-            chaiExpect(result).to.be.an('object');
-            chaiExpect(result.nonContractShipmentDetails).to.contain.keys('deliverySpec', 'finalShippingPoint', 'trackingPin');
-            chaiExpect(result.nonContractShipmentDetails.deliverySpec).to.contain.keys('destination', 'serviceCode', 'sender', 'parcelCharacteristics');
-          });
+    return cpc.getShipmentDetails(testShipment.shipmentId)
+      .then((result) => {
+        chaiExpect(result).to.be.an('object');
+        chaiExpect(result.nonContractShipmentDetails).to.contain.keys('deliverySpec', 'finalShippingPoint', 'trackingPin');
+        chaiExpect(result.nonContractShipmentDetails.deliverySpec).to.contain.keys('destination', 'serviceCode', 'sender', 'parcelCharacteristics');
       });
   });
 
   it('Can refund a shipment', () => {
-    const timestamp = Date.now();
-    return cpc.getShipments(timestamp - 115200000)
-      .then(result => {
-        chaiExpect(result).to.be.an('array');
-        chaiExpect(result).to.not.be.empty; // eslint-disable-line no-unused-expressions
-
-        return cpc.refundNonContractShipment(result[0].shipmentId, 'test@example.com')
-          .then((result) => {
-            chaiExpect(result).to.be.an('object');
-            chaiExpect(result).to.contain.keys('serviceTicketId', 'serviceTicketDate');
-          });
+    return cpc.refundNonContractShipment(testShipment.shipmentId, 'test@example.com')
+      .then((result) => {
+        chaiExpect(result).to.be.an('object');
+        chaiExpect(result).to.contain.keys('serviceTicketId', 'serviceTicketDate');
       });
   });
 
