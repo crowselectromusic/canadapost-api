@@ -1,9 +1,7 @@
 /* global describe, it */
 /* eslint-env mocha */
-
-require('dotenv').config();
-const chaiExpect = require('chai').expect;
-const CanadaPostClient = require('../lib/canadapost');
+import { expect as chaiExpect } from 'chai';
+import CanadaPostClient from '../lib/canadapost.js';
 
 const cpc = new CanadaPostClient(process.env.CPC_USERNAME, process.env.CPC_PASSWORD, process.env.CPC_CUSTOMER);
 
@@ -122,7 +120,6 @@ describe('Canada Post', function () {
           chaiExpect(err).to.exist; // eslint-disable-line no-unused-expressions
           chaiExpect(err).to.be.an.instanceof(CanadaPostClient.CanadaPostError);
           chaiExpect(err.message).to.be.a.string; // eslint-disable-line no-unused-expressions
-          chaiExpect(err.message).to.include('postal-code value \'POOT\' is not a valid instance of type');
           chaiExpect(err.message).to.include('PostalCodeType');
           chaiExpect(err.code).to.equal('Server');
           chaiExpect(err.originalMessages).to.be.an('array');

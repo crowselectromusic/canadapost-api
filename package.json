@@ -1,11 +1,11 @@
 {
   "name": "canadapost-api",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "A more complete Canada Post API library",
   "main": "lib/canadapost.js",
   "scripts": {
     "lint": "semistandard",
-    "test": "npm run lint && ./node_modules/.bin/mocha --timeout 60000 ./test"
+    "test": "npm run lint && ./node_modules/.bin/mocha -r dotenv/config --timeout 60000 ./test"
   },
   "keywords": [
     "canada",
@@ -20,13 +20,15 @@
   "dependencies": {
     "lodash.camelcase": "^4.3.0",
     "lodash.kebabcase": "^4.1.1",
-    "node-fetch": "^2.6.0",
-    "xml2js": "^0.4.23"
+    "xml2js": "^0.6.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "dotenv": "^8.2.0",
-    "mocha": "^8.1.2",
-    "semistandard": "^14.2.3"
+    "chai": "^5.2.0",
+    "dotenv": "^16.5.0",
+    "mocha": "^11.1.0",
+    "semistandard": "^17.0.0"
   }
 }
