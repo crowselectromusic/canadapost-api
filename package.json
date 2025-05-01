@@ -15,7 +15,10 @@
     "canadapost"
   ],
   "author": "\"Kevin S\" <kevin@chilicode.ca>",
-  "repository": "https://github.com/t3rminus/canada-post.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/t3rminus/canada-post.git"
+  },
   "license": "MIT",
   "dependencies": {
     "lodash.camelcase": "^4.3.0",
